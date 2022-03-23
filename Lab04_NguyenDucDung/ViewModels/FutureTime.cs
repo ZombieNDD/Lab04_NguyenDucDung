@@ -17,7 +17,7 @@ namespace Lab04_NguyenDucDung.ViewModels
                 CultureInfo.CurrentCulture,
                 DateTimeStyles.None,
                 out dateTime);
-            return (isValid && dateTime > DateTime.Now);
+            return isValid;
         }
     }
 }
