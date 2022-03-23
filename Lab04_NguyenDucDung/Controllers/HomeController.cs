@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Lab04_NguyenDucDung.Models;
+using Lab04_NguyenDucDung.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,9 +10,23 @@ namespace Lab04_NguyenDucDung.Controllers
 {
     public class HomeController : Controller
     {
+        private ApplicationDbContext _dbContext;
+        public HomeController()
+        {
+            _dbContext = new ApplicationDbContext();
+        }
         public ActionResult Index()
         {
-            return View();
+            var upcommingCourse = _dbContext.Courses
+                .Where(x => x.DateTime > DateTime.Now)
+                .OrderBy(x => x.DateTime)
+                .Select(x => new UpCommingCourse()
+                {
+                    DateTime = x.DateTime,
+                    LecturerName = x.Lecturer.Name
+                });
+                
+            return View(upcommingCourse);
         }
 
         public ActionResult About()
