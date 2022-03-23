@@ -15,6 +15,7 @@ namespace Lab04_NguyenDucDung.ViewModels
         [FutureDate]
         public string Date { get; set; }
         [Required]
+        [FutureTime]
         public string Time { get; set; }
         [Required]
         public byte Category { get; set; }
