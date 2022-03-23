@@ -1,5 +1,6 @@
 ﻿using Lab04_NguyenDucDung.Models;
 using Lab04_NguyenDucDung.ViewModels;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,21 @@ namespace Lab04_NguyenDucDung.Controllers
                 Categories = _dbContext.Categories.ToList()
             };
             return View(viewModel);
+        }
+        [Authorize]
+        [HttpPost]
+        public ActionResult Create(CourseViewModel viewModel)
+        {
+            var course = new Course
+            {
+                LecturerID = User.Identity.GetUserId(),
+                DateTime = viewModel.GetDateTime(),
+                CategoryID = viewModel.Category,
+                Place = viewModel.Place,
+            };
+            _dbContext.Courses.Add(course);
+            _dbContext.SaveChanges();
+            return RedirectToAction("Index","Home");
         }
     }
 }
